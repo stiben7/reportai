@@ -8,140 +8,160 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --surface-0: #f1f0e8; --surface-1: #f8f7f4; --surface-2: #ffffff;
-      --text-primary: #1a1a1a; --text-secondary: #5f5e5a; --text-muted: #888780;
-      --border: rgba(0,0,0,0.10); --border-strong: rgba(0,0,0,0.18); --radius: 8px;
-      --bg-accent: #e6f1fb; --border-accent: #b5d4f4; --text-accent: #185fa5;
-      --bg-danger: #fcebeb; --border-danger: #f7c1c1; --text-danger: #a32d2d;
-      --text-success: #3b6d11; --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --bg:        #EEE9DF;
+      --surface-1: #F5F2EC;
+      --surface-2: #FFFFFF;
+      --oatmeal:   #C9C1B1;
+      --navy:      #2C3B4D;
+      --navy-deep: #1B2632;
+      --flame:     #FFB162;
+      --truffle:   #A35139;
+      --text-primary:   #1B2632;
+      --text-secondary: #4a4438;
+      --text-muted:     #8a8070;
+      --border:         rgba(201,193,177,0.5);
+      --border-strong:  rgba(201,193,177,0.9);
+      --radius: 8px;
+      --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       --font-mono: 'SF Mono', 'Fira Code', monospace;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --surface-0: #1a1a18; --surface-1: #242420; --surface-2: #2e2e2a;
-        --text-primary: #f0efe8; --text-secondary: #a8a79f; --text-muted: #6e6d68;
-        --border: rgba(255,255,255,0.10); --border-strong: rgba(255,255,255,0.18);
-        --bg-accent: #0c447c; --border-accent: #185fa5; --text-accent: #85b7eb;
-        --bg-danger: #501313; --border-danger: #791f1f; --text-danger: #f09595;
-        --text-success: #97c459;
-      }
-    }
-    body { font-family: var(--font-sans); background: var(--surface-0); color: var(--text-primary); min-height: 100vh; }
+
+    body { font-family: var(--font-sans); background: var(--bg); color: var(--text-primary); min-height: 100vh; }
     .page { max-width: 760px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
+    /* Topbar */
     .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; }
     .logo { display: flex; align-items: center; gap: 12px; }
-    .logo-mark { width: 36px; height: 36px; background: #1e293b; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .logo-mark i { color: #fff; font-size: 18px; }
-    .logo-name { font-size: 18px; font-weight: 600; color: var(--text-primary); }
+    .logo-mark { width: 36px; height: 36px; background: var(--navy); border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .logo-mark i { color: var(--flame); font-size: 18px; }
+    .logo-name { font-size: 18px; font-weight: 700; color: var(--navy-deep); letter-spacing: -0.3px; }
     .logo-sub { font-size: 12px; color: var(--text-muted); }
     .topbar-right { display: flex; align-items: center; gap: 10px; }
-    .build-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--surface-1); border: 0.5px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 12px; color: var(--text-secondary); font-family: var(--font-mono); }
-    .cog-btn { width: 36px; height: 36px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface-1); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: background 0.1s; }
-    .cog-btn:hover { background: var(--surface-2); color: var(--text-primary); }
-    .cog-btn.active { background: var(--surface-2); border-color: #1e293b; color: #1e293b; }
+    .build-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--surface-1); border: 0.5px solid var(--border-strong); border-radius: 20px; padding: 3px 10px; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+    .cog-btn { width: 36px; height: 36px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface-1); cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-muted); transition: background 0.1s, color 0.1s; }
+    .cog-btn:hover { background: var(--surface-2); color: var(--navy); }
+    .cog-btn.active { background: var(--navy); color: var(--flame); border-color: var(--navy); }
 
-    .settings-panel { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; margin-bottom: 1.25rem; overflow: hidden; }
-    .settings-tabs { display: flex; border-bottom: 0.5px solid var(--border); }
-    .stab { flex: 1; padding: 11px; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; font-size: 13px; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; font-family: var(--font-sans); transition: color 0.1s; }
-    .stab.active { color: var(--text-primary); border-bottom-color: #1e293b; }
-    .stab:hover:not(.active) { background: var(--surface-1); color: var(--text-primary); }
+    /* Settings panel */
+    .settings-panel { background: var(--surface-2); border: 0.5px solid var(--border-strong); border-radius: 12px; margin-bottom: 1.25rem; overflow: hidden; }
+    .settings-tabs { display: flex; border-bottom: 0.5px solid var(--border-strong); background: var(--surface-1); }
+    .stab { flex: 1; padding: 11px; background: none; border: none; border-bottom: 2px solid transparent; margin-bottom: -1px; font-size: 13px; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; font-family: var(--font-sans); transition: color 0.1s; }
+    .stab.active { color: var(--navy-deep); border-bottom-color: var(--flame); font-weight: 500; }
+    .stab:hover:not(.active) { color: var(--text-primary); }
     .settings-body { padding: 1.375rem; }
-    .profile-row { display: flex; align-items: center; gap: 12px; padding: 1rem; background: var(--surface-1); border-radius: var(--radius); margin-bottom: 1.125rem; }
-    .avatar { width: 42px; height: 42px; border-radius: 50%; background: #1e293b; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 15px; font-weight: 600; flex-shrink: 0; }
+    .profile-row { display: flex; align-items: center; gap: 12px; padding: 1rem; background: var(--bg); border-radius: var(--radius); margin-bottom: 1.125rem; border: 0.5px solid var(--border-strong); }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; color: var(--flame); font-size: 15px; font-weight: 700; flex-shrink: 0; }
 
+    /* Fields */
     .field { margin-bottom: 1rem; }
     .field:last-of-type { margin-bottom: 0; }
-    .field label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; }
-    .field input, .field select { width: 100%; padding: 9px 11px; font-size: 14px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface-1); color: var(--text-primary); font-family: var(--font-sans); transition: border-color 0.15s; }
-    .field input:focus, .field select:focus { outline: none; border-color: #3b82f6; }
+    .field label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 5px; font-weight: 500; }
+    .field input, .field select { width: 100%; padding: 9px 11px; font-size: 14px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); color: var(--text-primary); font-family: var(--font-sans); transition: border-color 0.15s; }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--flame); box-shadow: 0 0 0 3px rgba(255,177,98,0.15); }
+    .field .hint { font-size: 12px; color: var(--text-muted); margin-top: 5px; line-height: 1.5; }
+    .field .hint a { color: var(--truffle); }
     .save-row { display: flex; justify-content: flex-end; margin-top: 1.125rem; }
-    .save-btn { padding: 8px 18px; background: #1e293b; color: #fff; border: none; border-radius: var(--radius); font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font-sans); transition: opacity 0.15s; }
+    .save-btn { padding: 8px 18px; background: var(--navy); color: #fff; border: none; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; font-family: var(--font-sans); transition: opacity 0.15s; }
     .save-btn:hover { opacity: 0.85; }
 
+    /* Hero */
     .hero { margin-bottom: 1.75rem; }
-    .hero h1 { font-size: 22px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; line-height: 1.3; }
+    .hero h1 { font-size: 24px; font-weight: 700; color: var(--navy-deep); margin-bottom: 8px; line-height: 1.25; letter-spacing: -0.4px; }
     .hero p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; }
-    .steps { display: flex; flex-direction: column; }
-    .step { display: flex; gap: 14px; padding: 13px 0; border-bottom: 0.5px solid var(--border); }
+    .steps { display: flex; flex-direction: column; background: var(--surface-2); border: 0.5px solid var(--border-strong); border-radius: 12px; overflow: hidden; }
+    .step { display: flex; gap: 14px; padding: 14px 16px; border-bottom: 0.5px solid var(--border-strong); }
     .step:last-child { border-bottom: none; }
-    .step-num { width: 24px; height: 24px; border-radius: 50%; background: #1e293b; color: #fff; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-    .step-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; }
+    .step-num { width: 24px; height: 24px; border-radius: 50%; background: var(--navy); color: var(--flame); font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .step-title { font-size: 13px; font-weight: 600; color: var(--navy-deep); margin-bottom: 3px; }
     .step-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
 
-    .card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.375rem; margin-bottom: 1rem; }
-    .card-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1.125rem; }
+    /* Cards */
+    .card { background: var(--surface-2); border: 0.5px solid var(--border-strong); border-radius: 12px; padding: 1.375rem; margin-bottom: 1rem; }
+    .card-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1.125rem; }
 
-    .btn-primary { width: 100%; padding: 11px; background: #1e293b; color: #fff; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-sans); transition: opacity 0.15s; }
-    .btn-primary:hover { opacity: 0.85; }
-    .btn-ghost { padding: 7px 13px; background: transparent; border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 13px; color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: background 0.1s; font-family: var(--font-sans); }
-    .btn-ghost:hover { background: var(--surface-1); }
-    .sample-btn { font-size: 12px; color: var(--text-accent); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; font-family: var(--font-sans); }
+    /* Buttons */
+    .btn-primary { width: 100%; padding: 12px; background: var(--navy); color: #fff; border: none; border-radius: var(--radius); font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: var(--font-sans); transition: background 0.15s; }
+    .btn-primary:hover { background: var(--navy-deep); }
+    .btn-ghost { padding: 7px 13px; background: transparent; border: 0.5px solid var(--border-strong); border-radius: var(--radius); font-size: 13px; color: var(--text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: background 0.1s, color 0.1s; font-family: var(--font-sans); }
+    .btn-ghost:hover { background: var(--bg); color: var(--navy); }
+    .sample-btn { font-size: 12px; color: var(--truffle); background: none; border: none; cursor: pointer; padding: 0; text-decoration: underline; font-family: var(--font-sans); font-weight: 500; }
 
+    /* Sheet analyzer */
     .analyze-row { display: flex; gap: 8px; }
-    .analyze-row input { flex: 1; padding: 9px 11px; font-size: 14px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface-1); color: var(--text-primary); font-family: var(--font-sans); }
-    .analyze-row input:focus { outline: none; border-color: #3b82f6; }
-    .analyze-btn { padding: 9px 16px; background: #1e293b; color: #fff; border: none; border-radius: var(--radius); font-size: 13px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-family: var(--font-sans); transition: opacity 0.15s; }
-    .analyze-btn:hover { opacity: 0.85; }
+    .analyze-row input { flex: 1; padding: 9px 11px; font-size: 14px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); color: var(--text-primary); font-family: var(--font-sans); transition: border-color 0.15s; }
+    .analyze-row input:focus { outline: none; border-color: var(--flame); box-shadow: 0 0 0 3px rgba(255,177,98,0.15); }
+    .analyze-btn { padding: 9px 16px; background: var(--navy); color: #fff; border: none; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-family: var(--font-sans); transition: background 0.15s; }
+    .analyze-btn:hover { background: var(--navy-deep); }
     .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+    /* Sheet list */
     .sheet-list { margin-top: 1rem; display: flex; flex-direction: column; gap: 6px; }
-    .sheet-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 0.5px solid var(--border); border-radius: var(--radius); cursor: pointer; background: var(--surface-1); transition: border-color 0.15s, background 0.1s; }
-    .sheet-item:hover { border-color: var(--border-strong); background: var(--surface-2); }
-    .sheet-item.selected { border-color: #1e293b; background: var(--surface-2); }
+    .sheet-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); cursor: pointer; background: var(--bg); transition: border-color 0.15s, background 0.1s; }
+    .sheet-item:hover { border-color: var(--oatmeal); background: var(--surface-1); }
+    .sheet-item.selected { border-color: var(--flame); background: var(--surface-2); }
     .sheet-item-left { display: flex; align-items: center; gap: 10px; }
     .sheet-item-left i { font-size: 16px; color: var(--text-muted); }
-    .sheet-item.selected .sheet-item-left i { color: #1e293b; }
-    .sheet-name { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .sheet-item.selected .sheet-item-left i { color: var(--flame); }
+    .sheet-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .sheet-meta { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
     .sheet-check { width: 18px; height: 18px; border-radius: 50%; border: 0.5px solid var(--border-strong); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-    .sheet-item.selected .sheet-check { background: #1e293b; border-color: #1e293b; color: #fff; }
+    .sheet-item.selected .sheet-check { background: var(--flame); border-color: var(--flame); color: var(--navy-deep); }
 
-    .preview-table-wrap { margin-top: 1rem; border: 0.5px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-    .preview-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 8px 12px; border-bottom: 0.5px solid var(--border); background: var(--surface-1); }
+    /* Preview table */
+    .preview-table-wrap { margin-top: 1rem; border: 0.5px solid var(--border-strong); border-radius: var(--radius); overflow: hidden; }
+    .preview-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); padding: 8px 12px; border-bottom: 0.5px solid var(--border-strong); background: var(--bg); }
     .preview-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    .preview-table th { text-align: left; padding: 6px 10px; border-bottom: 0.5px solid var(--border); color: var(--text-secondary); font-weight: 500; white-space: nowrap; background: var(--surface-1); }
+    .preview-table th { text-align: left; padding: 6px 10px; border-bottom: 0.5px solid var(--border-strong); color: var(--text-secondary); font-weight: 600; white-space: nowrap; background: var(--surface-1); }
     .preview-table td { padding: 5px 10px; border-bottom: 0.5px solid var(--border); color: var(--text-primary); white-space: nowrap; }
     .preview-table tr:last-child td { border-bottom: none; }
 
-    .status-bar { display: flex; align-items: center; gap: 10px; padding: 12px; background: var(--bg-accent); border: 0.5px solid var(--border-accent); border-radius: var(--radius); margin-bottom: 1rem; font-size: 13px; color: var(--text-accent); }
-    .spinner { width: 14px; height: 14px; border: 2px solid var(--border-accent); border-top-color: var(--text-accent); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
+    /* Alerts */
+    .status-bar { display: flex; align-items: center; gap: 10px; padding: 12px; background: rgba(255,177,98,0.12); border: 0.5px solid rgba(255,177,98,0.4); border-radius: var(--radius); margin-bottom: 1rem; font-size: 13px; color: var(--navy-deep); }
+    .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,177,98,0.3); border-top-color: var(--flame); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .error-bar { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: var(--bg-danger); border: 0.5px solid var(--border-danger); border-radius: var(--radius); margin-bottom: 1rem; font-size: 13px; color: var(--text-danger); line-height: 1.5; }
+    .error-bar { display: flex; align-items: flex-start; gap: 10px; padding: 12px; background: rgba(163,81,57,0.08); border: 0.5px solid rgba(163,81,57,0.3); border-radius: var(--radius); margin-bottom: 1rem; font-size: 13px; color: var(--truffle); line-height: 1.5; }
 
+    /* Report */
     .report-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
-    .report-title { font-size: 21px; font-weight: 600; color: var(--text-primary); line-height: 1.3; }
+    .report-title { font-size: 21px; font-weight: 700; color: var(--navy-deep); line-height: 1.3; letter-spacing: -0.3px; }
     .report-meta { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
     .report-actions { display: flex; gap: 8px; flex-shrink: 0; flex-wrap: wrap; }
     .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 1rem; }
-    .metric-card { background: var(--surface-1); border-radius: var(--radius); padding: 0.875rem; }
-    .metric-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
-    .metric-value { font-size: 20px; font-weight: 600; color: var(--text-primary); }
-    .section-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 10px; }
+    .metric-card { background: var(--bg); border-radius: var(--radius); padding: 0.875rem; border: 0.5px solid var(--border-strong); }
+    .metric-label { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+    .metric-value { font-size: 20px; font-weight: 700; color: var(--navy-deep); }
+    .section-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 10px; }
     .prose { font-size: 14px; line-height: 1.8; color: var(--text-primary); white-space: pre-wrap; }
-    .insight-block { border-left: 2.5px solid var(--border-accent); padding-left: 14px; margin-bottom: 12px; border-radius: 0; }
+    .insight-block { border-left: 2.5px solid var(--flame); padding-left: 14px; margin-bottom: 12px; border-radius: 0; }
     .insight-block p { font-size: 14px; line-height: 1.7; color: var(--text-primary); }
-    .divider { border: none; border-top: 0.5px solid var(--border); margin: 1.375rem 0; }
+    .divider { border: none; border-top: 0.5px solid var(--border-strong); margin: 1.375rem 0; }
+
+    /* Tabs */
     .tab-row { display: flex; gap: 4px; margin-bottom: 1.25rem; }
-    .tab { padding: 5px 13px; border-radius: 20px; font-size: 13px; cursor: pointer; background: none; border: 0.5px solid transparent; color: var(--text-secondary); font-family: var(--font-sans); transition: background 0.1s; }
-    .tab.active { background: var(--surface-1); border-color: var(--border-strong); color: var(--text-primary); }
+    .tab { padding: 5px 13px; border-radius: 20px; font-size: 13px; cursor: pointer; background: none; border: 0.5px solid transparent; color: var(--text-muted); font-family: var(--font-sans); transition: background 0.1s; }
+    .tab.active { background: var(--navy); color: #fff; border-color: var(--navy); font-weight: 500; }
+    .tab:hover:not(.active) { background: var(--bg); color: var(--text-primary); }
+
+    /* Raw table */
     .raw-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .raw-table th { text-align: left; padding: 7px 10px; border-bottom: 0.5px solid var(--border-strong); color: var(--text-secondary); font-weight: 500; white-space: nowrap; }
+    .raw-table th { text-align: left; padding: 7px 10px; border-bottom: 0.5px solid var(--border-strong); color: var(--text-secondary); font-weight: 600; white-space: nowrap; background: var(--bg); }
     .raw-table td { padding: 7px 10px; border-bottom: 0.5px solid var(--border); color: var(--text-primary); }
     .raw-table tr:last-child td { border-bottom: none; }
 
-    .export-card { background: var(--surface-2); border: 0.5px solid var(--border); border-radius: 12px; padding: 1.375rem; margin-top: 1rem; }
-    .export-title { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 1rem; }
+    /* Export */
+    .export-card { background: var(--surface-2); border: 0.5px solid var(--border-strong); border-radius: 12px; padding: 1.375rem; margin-top: 1rem; }
+    .export-title { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem; }
     .export-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .export-btn { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--surface-1); cursor: pointer; transition: border-color 0.15s, background 0.1s; font-family: var(--font-sans); text-align: left; }
-    .export-btn:hover { border-color: #1e293b; background: var(--surface-2); }
+    .export-btn { display: flex; align-items: center; gap: 12px; padding: 13px 14px; border: 0.5px solid var(--border-strong); border-radius: var(--radius); background: var(--bg); cursor: pointer; transition: border-color 0.15s, background 0.1s; font-family: var(--font-sans); text-align: left; }
+    .export-btn:hover { border-color: var(--flame); background: var(--surface-2); }
     .export-icon { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 20px; }
-    .export-icon.pptx { background: #fff1ec; color: #c94a1a; }
-    .export-icon.docx { background: #e8f0fe; color: #1a56c9; }
-    .export-label { font-size: 13px; font-weight: 500; color: var(--text-primary); }
+    .export-icon.pptx { background: rgba(255,177,98,0.15); color: var(--truffle); }
+    .export-icon.docx { background: rgba(44,59,77,0.1); color: var(--navy); }
+    .export-label { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .export-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
-    .export-generating { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-accent); margin-top: 1rem; }
+    .export-generating { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--navy); margin-top: 1rem; }
 
+    /* Footer */
     .footer { text-align: center; margin-top: 3rem; font-size: 12px; color: var(--text-muted); }
 
     @media (max-width: 500px) { .export-options { grid-template-columns: 1fr; } }
@@ -156,6 +176,7 @@
 <body>
 <div class="page">
 
+  <!-- Topbar -->
   <div class="topbar">
     <div class="logo">
       <div class="logo-mark"><i class="ti ti-report-analytics" aria-hidden="true"></i></div>
@@ -172,7 +193,7 @@
     </div>
   </div>
 
-  <!-- Settings panel — profile only, no API keys needed -->
+  <!-- Settings panel -->
   <div class="settings-panel" id="settings-panel" style="display:none;">
     <div class="settings-tabs">
       <button class="stab active" id="stab-profile" onclick="switchStab('profile')">
@@ -187,7 +208,7 @@
         <div class="profile-row">
           <div class="avatar" id="avatar-initials">?</div>
           <div>
-            <div style="font-size:14px;font-weight:500;color:var(--text-primary);" id="profile-display-name">Your name</div>
+            <div style="font-size:14px;font-weight:600;color:var(--navy-deep);" id="profile-display-name">Your name</div>
             <div style="font-size:12px;color:var(--text-muted);margin-top:2px;" id="profile-display-agency">Your agency</div>
           </div>
         </div>
@@ -217,39 +238,40 @@
   <div id="view-input">
     <div class="hero">
       <h1>Turn campaign data into client-ready reports</h1>
-      <p>Paste your Google Sheets link, pick a sheet, and ReportAI writes a polished performance report in seconds — then export it as a PowerPoint deck or Word document.</p>
+      <p>Paste your Google Sheets link, pick a sheet, and ReportAI writes a polished performance report powered by Claude AI — then export as PowerPoint or Word.</p>
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
           <div>
             <div class="step-title">Paste your Google Sheets URL and analyze</div>
-            <div class="step-desc">Make sure your sheet is shared publicly (Anyone with link → Viewer). Click Analyze to fetch all tabs in your workbook and pick the one with campaign data.</div>
+            <div class="step-desc">Make sure your sheet is shared publicly (File → Share → Anyone with the link → Viewer). Click Analyze to fetch all tabs.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
           <div>
             <div class="step-title">Pick your sheet and check the preview</div>
-            <div class="step-desc">Select the correct tab from the list — you'll see a live 3-row preview so you can confirm it's the right data before generating.</div>
+            <div class="step-desc">Select the correct tab — you'll see a live 3-row preview to confirm it's the right data before generating.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
           <div>
             <div class="step-title">Fill in report details and generate</div>
-            <div class="step-desc">Enter the client name, reporting period, and preferred tone. Hit Generate — Claude reads your data and writes a complete report in about 10 seconds.</div>
+            <div class="step-desc">Enter the client name, period, and tone. Hit Generate — Claude reads your data and writes a complete report in about 10 seconds.</div>
           </div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
           <div>
             <div class="step-title">Export as PowerPoint or Word</div>
-            <div class="step-desc">Copy the report, print it as PDF, or export slide-ready PowerPoint content and a formatted Word document — ready to send to your client.</div>
+            <div class="step-desc">Copy, print as PDF, or export slide-ready PowerPoint content and a formatted Word document to send to your client.</div>
           </div>
         </div>
       </div>
     </div>
 
+    <!-- Sheet analyzer -->
     <div class="card">
       <div class="card-title">Sheet analyzer</div>
       <div class="analyze-row">
@@ -258,8 +280,8 @@
           <i class="ti ti-table-search" aria-hidden="true"></i> Analyze
         </button>
       </div>
-      <div style="margin-top:8px;">
-        <span style="font-size:12px;color:var(--text-muted);">Share your sheet publicly: File → Share → Anyone with the link → Viewer. </span>
+      <div style="margin-top:8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+        <span style="font-size:12px;color:var(--text-muted);">Share sheet publicly: File → Share → Anyone with link → Viewer.</span>
         <button class="sample-btn" onclick="loadSample()">Use sample data instead</button>
       </div>
       <div id="sheet-list-wrap" style="display:none;">
@@ -273,6 +295,7 @@
       </div>
     </div>
 
+    <!-- Report settings -->
     <div class="card">
       <div class="card-title">Report settings</div>
       <div class="field">
@@ -347,6 +370,7 @@
       </div>
     </div>
 
+    <!-- Export -->
     <div class="export-card">
       <div class="export-title">Export report</div>
       <div class="export-options">
@@ -378,13 +402,13 @@
 
 <script>
   const SAMPLE_DATA = [
-    ['Channel','Impressions','Clicks','CTR','Spend','Conversions','CPA','Revenue','ROAS'],
-    ['Google Search','420000','18900','4.50%','$8200','312','$26.28','$31200','3.80x'],
-    ['Google Display','1200000','9600','0.80%','$3100','48','$64.58','$4320','1.39x'],
-    ['Meta Ads','890000','14240','1.60%','$6400','228','$28.07','$20520','3.21x'],
-    ['Instagram','340000','6120','1.80%','$2900','89','$32.58','$8010','2.76x'],
-    ['Email','62000','4340','7.00%','$400','201','$1.99','$18090','45.23x'],
-    ['Organic Search','—','22100','—','$0','156','$0','$14040','—'],
+    ['Account','Date of Insight','Campaign ID','Reach','Impressions','Cost per engagement','Amount spent','CPC','Link clicks'],
+    ['Alpha Fitness','2025-01-01','NOV-AF-CMP-001','12450','45320','0.18','680.5','0.52','1310'],
+    ['Bella Cafe','2025-01-01','NOV-BC-CMP-001','9830','30110','0.21','545','0.58','940'],
+    ['Alpha Fitness','2025-02-01','NOV-CT-CMP-001','15600','52890','0.19','790.75','0.49','1620'],
+    ['Bella Cafe','2025-02-01','NOV-DT-CMP-001','8420','24560','0.24','410.2','0.61','670'],
+    ['Alpha Fitness','2025-03-01','NOV-EA-CMP-001','17950','61005','0.17','905.3','0.47','1930'],
+    ['Bella Cafe','2025-03-01','NOV-AF-CMP-002','11230','38720','0.20','620.4','0.53','1170'],
   ];
 
   let rawData = [];
@@ -453,6 +477,16 @@
     renderSheetList(['Sample Campaign Data'], true);
     selectSheet('Sample Campaign Data');
     showError('');
+  }
+
+  function resetAnalyzer() {
+    document.getElementById('sheet-url').disabled = false;
+    document.getElementById('sheet-url').value = '';
+    document.getElementById('analyze-btn').disabled = false;
+    document.getElementById('sheet-list-wrap').style.display = 'none';
+    document.getElementById('sheet-preview-wrap').style.display = 'none';
+    sheetsData = {};
+    rawData = [];
   }
 
   async function analyzeSheet() {
@@ -533,12 +567,12 @@
     const parseNum = v => { if (!v || v === '—') return null; return parseFloat(String(v).replace(/[$,%x]/g,'')) || null; };
     const sum = ci => rows.reduce((a,r) => { const n = parseNum(r[ci]); return n !== null ? a + n : a; }, 0);
     const metrics = [];
+    const ri = col('reach'); if (ri >= 0) { const v = sum(ri); metrics.push({ label:'Total reach', value: v >= 1e6 ? (v/1e6).toFixed(2)+'M' : v.toLocaleString() }); }
     const ii = col('impression'); if (ii >= 0) { const v = sum(ii); metrics.push({ label:'Total impressions', value: v >= 1e6 ? (v/1e6).toFixed(2)+'M' : v.toLocaleString() }); }
-    const ci = col('click'); if (ci >= 0) metrics.push({ label:'Total clicks', value: sum(ci).toLocaleString() });
-    const si = col('spend'); if (si >= 0) metrics.push({ label:'Total spend', value: '$'+Math.round(sum(si)).toLocaleString() });
-    const cvi = col('conv'); if (cvi >= 0) metrics.push({ label:'Conversions', value: Math.round(sum(cvi)).toLocaleString() });
-    const ri = col('revenue'); if (ri >= 0) metrics.push({ label:'Total revenue', value: '$'+Math.round(sum(ri)).toLocaleString() });
-    if (si >= 0 && ri >= 0) { const r = sum(ri)/sum(si); if (r > 0) metrics.push({ label:'Blended ROAS', value: r.toFixed(2)+'x' }); }
+    const si = col('amount spent') >= 0 ? col('amount spent') : col('spend'); if (si >= 0) metrics.push({ label:'Total spent', value: '$'+Math.round(sum(si)).toLocaleString() });
+    const li = col('link click'); if (li >= 0) metrics.push({ label:'Link clicks', value: Math.round(sum(li)).toLocaleString() });
+    const ci = col('cpc'); if (ci >= 0) { const avg = rows.reduce((a,r,_,arr)=>{ const n=parseNum(r[ci]); return n!==null?a+n/arr.length:a; },0); metrics.push({ label:'Avg CPC', value: '$'+avg.toFixed(2) }); }
+    const ei = col('cost per eng') >= 0 ? col('cost per eng') : col('engagement'); if (ei >= 0) { const avg = rows.reduce((a,r,_,arr)=>{ const n=parseNum(r[ei]); return n!==null?a+n/arr.length:a; },0); metrics.push({ label:'Avg CPE', value: '$'+avg.toFixed(2) }); }
     return metrics;
   }
 
@@ -647,12 +681,12 @@
       status.style.display = 'none';
       output.style.display = 'block';
       const icon = type==='pptx' ? 'ti-presentation' : 'ti-file-text';
-      const color = type==='pptx' ? '#c94a1a' : '#1a56c9';
+      const color = type==='pptx' ? 'var(--truffle)' : 'var(--navy)';
       const label = type==='pptx' ? 'PowerPoint content' : 'Word document content';
       const escaped = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-      output.innerHTML = '<div style="border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--surface-1);border-bottom:0.5px solid var(--border);">' +
-        '<div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--text-primary);"><i class="ti '+icon+'" style="color:'+color+';font-size:16px;" aria-hidden="true"></i> '+label+' ready</div>' +
+      output.innerHTML = '<div style="border:0.5px solid var(--border-strong);border-radius:var(--radius);overflow:hidden;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg);border-bottom:0.5px solid var(--border-strong);">' +
+        '<div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:var(--navy-deep);"><i class="ti '+icon+'" style="color:'+color+';font-size:16px;" aria-hidden="true"></i> '+label+' ready</div>' +
         '<button class="btn-ghost" style="font-size:12px;padding:4px 10px;" onclick="copyExport()"><i class="ti ti-copy" aria-hidden="true"></i> Copy all</button></div>' +
         '<pre id="export-text" style="padding:14px;font-size:12px;line-height:1.7;color:var(--text-primary);white-space:pre-wrap;font-family:var(--font-mono);max-height:340px;overflow-y:auto;background:var(--surface-2);">'+escaped+'</pre></div>' +
         '<div style="font-size:12px;color:var(--text-muted);margin-top:8px;">Copy the content above and paste it into '+(type==='pptx'?'PowerPoint':'Word')+' — each section maps to a slide or heading.</div>';
@@ -674,12 +708,7 @@
   }
 
   function resetApp() {
-    document.getElementById('sheet-url').disabled = false;
-    document.getElementById('analyze-btn').disabled = false;
-    document.getElementById('sheet-url').value = '';
-    document.getElementById('sheet-list-wrap').style.display = 'none';
-    document.getElementById('sheet-preview-wrap').style.display = 'none';
-    rawData = []; sheetsData = {};
+    resetAnalyzer();
     showError('');
     show('view-input');
   }
