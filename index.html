@@ -283,6 +283,8 @@
       <div style="margin-top:8px; display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
         <span style="font-size:12px;color:var(--text-muted);">Share sheet publicly: File → Share → Anyone with link → Viewer.</span>
         <button class="sample-btn" onclick="loadSample()">Use sample data instead</button>
+        <span style="font-size:12px;color:var(--text-muted);">·</span>
+        <button class="sample-btn" id="change-url-btn" onclick="changeUrl()" style="color:var(--navy);display:none;"><i class="ti ti-edit" style="font-size:12px;vertical-align:-1px;" aria-hidden="true"></i> Change URL</button>
       </div>
       <div id="sheet-list-wrap" style="display:none;">
         <div class="sheet-list" id="sheet-list"></div>
@@ -474,8 +476,23 @@
     document.getElementById('sheet-url').value = 'sample://demo-data';
     document.getElementById('sheet-url').disabled = true;
     document.getElementById('analyze-btn').disabled = true;
+    document.getElementById('change-url-btn').style.display = 'inline';
     renderSheetList(['Sample Campaign Data'], true);
     selectSheet('Sample Campaign Data');
+    showError('');
+  }
+
+  function changeUrl() {
+    const input = document.getElementById('sheet-url');
+    input.disabled = false;
+    input.value = '';
+    input.focus();
+    document.getElementById('analyze-btn').disabled = false;
+    document.getElementById('sheet-list-wrap').style.display = 'none';
+    document.getElementById('sheet-preview-wrap').style.display = 'none';
+    document.getElementById('change-url-btn').style.display = 'none';
+    sheetsData = {};
+    rawData = [];
     showError('');
   }
 
@@ -485,6 +502,7 @@
     document.getElementById('analyze-btn').disabled = false;
     document.getElementById('sheet-list-wrap').style.display = 'none';
     document.getElementById('sheet-preview-wrap').style.display = 'none';
+    document.getElementById('change-url-btn').style.display = 'none';
     sheetsData = {};
     rawData = [];
   }
@@ -509,6 +527,7 @@
         if (r.ok) { const d = await r.json(); if (d.values && d.values.length > 1) sheetsData[name] = d.values; }
       }
       renderSheetList(Object.keys(sheetsData), false);
+      document.getElementById('change-url-btn').style.display = 'inline';
       showError('');
     } catch (err) {
       showError(err.message || 'Could not connect to Google Sheets.');
